@@ -4760,31 +4760,51 @@ html.pixel-ratio-3 .actions-popover-label:after {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
+.add-screen{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 11000;
+  background: #fff;
+  box-sizing: border-box;
+  display: none;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  -ms-transition-property: -ms-transform;
+  -o-transition-property: -o-transform;
+  transition-property: transform;
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+}
 .popup.modal-in,
-.login-screen.modal-in,
-.popup.modal-out,
+.login-screen.modal-in,.add-screen.modal-in,
+.popup.modal-out,.add-screen.modal-out,
 .login-screen.modal-out {
   -webkit-transition-duration: 400ms;
   transition-duration: 400ms;
 }
 .popup.modal-in.not-animated,
-.login-screen.modal-in.not-animated,
-.popup.modal-out.not-animated,
+.login-screen.modal-in.not-animated,add-screen.modal-in.not-animated,
+.popup.modal-out.not-animated,add-screen.modal-in.not-animated,
 .login-screen.modal-out.not-animated {
   -webkit-transition-duration: 0ms;
   transition-duration: 0ms;
 }
-.popup.modal-in,
+.popup.modal-in, .add-screen.modal-in,
 .login-screen.modal-in {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
-.popup.modal-out,
+.popup.modal-out, .add-screen.modal-out,
 .login-screen.modal-out {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
-.login-screen.modal-in,
+.login-screen.modal-in,.add-screen.modal-in,.add-screen.modal-out
 .login-screen.modal-out {
   display: block;
 }
@@ -4818,7 +4838,7 @@ html.pixel-ratio-3 .actions-popover-label:after {
     z-index: 9500;
   }
 }
-html.with-statusbar-overlay .login-screen,
+html.with-statusbar-overlay .login-screen,html.with-statusbar-overlay .add-screen,
 html.with-statusbar-overlay .popup.tablet-fullscreen {
   height: -webkit-calc(100% - 20px);
   height: calc(100% - 20px);
@@ -7854,26 +7874,49 @@ html.ios-gt-8 .notifications .item-subtitle {
 .login-screen-content {
   background: #fff;
 }
+.add-screen-content {
+  background: #fff;
+}
 .login-screen-content .login-screen-title,
+.add-screen-content.add-screen-title,
 .login-screen-content .list-block,
+.add-screen-content .list-block,
 .login-screen-content .content-block,
-.login-screen-content .list-block-label {
+.add-screen-content .content-block,
+.login-screen-content .list-block-label,
+.add-screen-content .list-block-label {
   max-width: 480px;
   margin: 25px auto;
 }
-.login-screen-content .list-block ul {
+.login-screen-content .list-block ul,.add-screen-content .list-block ul  {
   background: none;
 }
+.add-screen-content .list-block ul:before {
+  display: none;
+}
 .login-screen-content .list-block ul:before {
+  display: none;
+}
+.add-screen-content .list-block ul:before {
   display: none;
 }
 .login-screen-content .list-block ul:after {
   display: none;
 }
+.add-screen-content .list-block ul:after {
+  display: none;
+}
 .login-screen-content .list-block-label {
   text-align: center;
 }
+.add-screen-content .list-block-label {
+  text-align: center;
+}
 .login-screen-title {
+  text-align: center;
+  font-size: 30px;
+}
+.add-screen-title {
   text-align: center;
   font-size: 30px;
 }
