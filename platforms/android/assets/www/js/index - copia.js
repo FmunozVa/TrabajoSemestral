@@ -9,50 +9,31 @@ var mainView = myApp.addView('.view-main', {
 
 document.addEventListener("deviceready", function(){
     $("#iniciar_sesion").bind("click",iniciar_session);
-     $("#cam").bind("click",cam);
+    $("#cam").bind("click",cam);
+     $('#geo').bind('click', geo);
      $('#registrar').bind('click', registrar);
      $('#geo').bind('click', geo);
      $('#comprar').bind('click', comprar);
 });
 
-function iniciar_session(){
-    var icon_name = '<i class="f7-icons" style="font-size:14px;">person</i>';
-    var icon_mail = '<i class="f7-icons" style="font-size:14px;">email</i>';
-
-    var correo  = $("#username").val();
-    var pass    = $("#password").val();
-
-    if(correo.trim().length > 0 && pass.trim().length > 0){
-        myApp.showPreloader("Iniciando Sesión...");
+function comprar(){
+    var id=comprar.val();
+    
+    myApp.showPreloader("Registrando");
         $.ajax({
             dataType: "json",
             type: "POST",
             data:{
-                user: correo,
-                pass: pass
-            },
-            url: "http://login-appmovilubb.rhcloud.com/",
-            success: function(respuesta){
-                if(respuesta.resp === true){
-                    $("#nosesion").hide();
-                    $("#sesion").show();
-                    $("#name").html(icon_name +" "+ respuesta.data.nombre);
-                    $("#mail").html(icon_mail +" "+ correo);
-                    myApp.hidePreloader();
-                    myApp.closeModal(".login-screen", true);
-                }else{
-                    myApp.hidePreloader();
-                    myApp.alert("Error en los datos de sesión", "SmartAPP");
-                }
-            },
-            error: function(){
-                myApp.hidePreloader();
-                myApp.alert("Error en la Conexión", "SmartAPP");
+              id=value
+                
             }
-        });
-    }else{
-        myApp.alert("No hay datos ingresados", "SmartAPP");
-    }
+});
+}
+function iniciar_session(){
+    
+    
+       
+    
 }
 function registrar(){
 
@@ -88,19 +69,44 @@ function registrar(){
         myApp.alert("Erron faltal datos por ingresar", "SmartAPP");
     }
 }
+
 function cam(){
-    navigator.camera.getPicture(
-        function(photo){
-           
-        }, 
+    navigator.camera.getPicture(function(photo){
+        $('#img_cam').attr('src',photo);
+        myApp.popup('.popup-cam');
+    }, function(error){
+        myApp.alert('Error al tomar la fotografía','SMART@APP')
+    }, {
+        quality:100
+    });
+}
+function geo(){
+    myApp.showPreloader('Localizando...');
+    navigator.geolocation.getCurrentPosition(
+        function(position){
+            $('#lat').html(position.coords.latitude);
+            $('#lon').html(position.coords.longitude);
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: position.coords.latitude, lng: position.coords.longitude},
+                zoom: 16
+            });
+            var marker = new google.maps.Marker({
+                position: {lat: position.coords.latitude, lng: position.coords.longitude},
+                map: map,
+                title: 'Mi posición'
+            });
+
+            myApp.hidePreloader();
+            myApp.popup('.popup-geo');
+        },
         function(error){
-            
-        }, 
+            myApp.alert('Se ha producido un error','SMART@APP');
+            myApp.hidePreloader();
+        },
         {
-            quality:100,
-            correctOrientation: true,
-            saveToPhotoAlbum: true,
-            cameraDirection: 1
+            maximumAge: 3000,
+            timeout: 5000,
+            enableHighAccuracy: true
         }
     );
 }

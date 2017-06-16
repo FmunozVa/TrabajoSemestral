@@ -9,7 +9,10 @@ var mainView = myApp.addView('.view-main', {
 
 document.addEventListener("deviceready", function(){
     $("#iniciar_sesion").bind("click",iniciar_session);
-    $("#tomarfotoid").bind("click",cam);
+     $("#cam").bind("click",cam);
+     $('#registrar').bind('click', registrar);
+     $('#geo').bind('click', geo);
+     $('#comprar').bind('click', comprar);
 });
 
 function iniciar_session(){
@@ -53,9 +56,8 @@ function iniciar_session(){
 }
 function registrar(){
 
-
     var nombre  = $("#nombre").val();
-    var correo  = $("#correo").val();
+    var rut  = $("#rut").val();
     var fnac  = $("#fnac").val();
     var pass    = $("#pass").val();
 
@@ -86,35 +88,19 @@ function registrar(){
         myApp.alert("Erron faltal datos por ingresar", "SmartAPP");
     }
 }
-
-
-function geo(){
-    myApp.showPreloader('Localizando...');
-    navigator.geolocation.getCurrentPosition(
-        function(position){
-            $('#lat').html(position.coords.latitude);
-            $('#lon').html(position.coords.longitude);
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: position.coords.latitude, lng: position.coords.longitude},
-                zoom: 16
-            });
-            var marker = new google.maps.Marker({
-                position: {lat: position.coords.latitude, lng: position.coords.longitude},
-                map: map,
-                title: 'Mi posición'
-            });
-
-            myApp.hidePreloader();
-            myApp.popup('.popup-geo');
-        },
+function cam(){
+    navigator.camera.getPicture(
+        function(photo){
+           
+        }, 
         function(error){
-            myApp.alert('Se ha producido un error','SMART@APP');
-            myApp.hidePreloader();
-        },
+            
+        }, 
         {
-            maximumAge: 3000,
-            timeout: 5000,
-            enableHighAccuracy: true
+            quality:100,
+            correctOrientation: true,
+            saveToPhotoAlbum: true,
+            cameraDirection: 1
         }
     );
 }
