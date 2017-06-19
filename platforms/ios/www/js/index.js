@@ -61,7 +61,7 @@ function registrar(){
     var fnac  = $("#fnac").val();
     var pass    = $("#pass").val();
 
-    if(nombre.trim().length > 0 && correo.trim().length > 0 && pass.trim().length > 0){
+    if(nombre.trim().length > 0  && pass.trim().length > 0){
         myApp.showPreloader("Registrando");
         $.ajax({
             dataType: "json",
