@@ -7,101 +7,105 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
 });
 
-document.addEventListener("deviceready", function(){
-    $("#iniciar_sesion").bind("click",iniciar_session);
-     $("#cam").bind("click",cam);
-     $('#registrar').bind('click', registrar);
-     $('#geo').bind('click', geo);
-     $('#comprar').bind('click', comprar);
+document.addEventListener("deviceready", function () {
+    $("#iniciar_sesion").bind("click", iniciar_session);
+    $("#cam").bind("click", cam);
+    $('#registrar').bind('click', registrar);
+    $('#geo').bind('click', geo);
+  
 });
 
-function iniciar_session(){
+function iniciar_session () {
     var icon_name = '<i class="f7-icons" style="font-size:14px;">person</i>';
-    var icon_mail = '<i class="f7-icons" style="font-size:14px;">email</i>';
 
-    var correo  = $("#username").val();
-    var pass    = $("#password").val();
+    var rut  = $("#Rut").val();
+    var pass = $("#Pass").val();
 
-    if(correo.trim().length > 0 && pass.trim().length > 0){
+    if (rut.trim().length > 0 && pass.trim().length > 0) {
         myApp.showPreloader("Iniciando Sesión...");
         $.ajax({
             dataType: "json",
             type: "POST",
-            data:{
-                user: correo,
+            data: {
+                rut: rut,
                 pass: pass
             },
-            url: "http://login-appmovilubb.rhcloud.com/",
-            success: function(respuesta){
-                if(respuesta.resp === true){
-                    $("#nosesion").hide();
-                    $("#sesion").show();
-                    $("#name").html(icon_name +" "+ respuesta.data.nombre);
-                    $("#mail").html(icon_mail +" "+ correo);
+            url: "http://146.83.196.204:8070/fmunozv/ingresar.php",
+            success: function (data, status, xhr) {
+                if (data.respuesta) {
+                    myApp.alert("Funciona", "SmartAPP");
+                    
                     myApp.hidePreloader();
                     myApp.closeModal(".login-screen", true);
-                }else{
+                } else {
                     myApp.hidePreloader();
                     myApp.alert("Error en los datos de sesión", "SmartAPP");
                 }
             },
-            error: function(){
+            error: function (xhr,status)  {
                 myApp.hidePreloader();
                 myApp.alert("Error en la Conexión", "SmartAPP");
             }
         });
-    }else{
+    } else {
         myApp.alert("No hay datos ingresados", "SmartAPP");
     }
 }
-function registrar(){
+function registrar() {
 
     var nombre  = $("#nombre").val();
     var rut  = $("#rut").val();
-    var fnac  = $("#fnac").val();
+    var correo  = $("#correo").val();
     var pass    = $("#pass").val();
 
-    if(nombre.trim().length > 0  && pass.trim().length > 0){
+    if (nombre.trim().length > 0  && rut.trim().length > 0 && correo.trim().length > 0 && pass.trim().length > 0) {
         myApp.showPreloader("Registrando");
         $.ajax({
             dataType: "json",
             type: "POST",
-            data:{
-                user: nombre,
+            data: {
+                nombre: nombre,
+                rut: rut,
+				correo: correo,
                 pass: pass
             },
-            url: "http://login-appmovilubb.rhcloud.com/",
-            success: function(respuesta){
-                if(respuesta.resp === true){
-                    myApp.alert("El Usuario ha sido registrado Exitosamente", "SmartAPP");
-                }else{
+            url: "http://146.83.196.204:8070/fmunozv/registrar.php",
+            success: function (data, status, xhr) {
+                if (data.respuesta) {
+					
+					myApp.hidePreloader();
+                    myApp.alert("El Usuario ha sido registrado Exitosamente", "Restaurant",function (value){
+					window.location = "index.html";
+					});
+                } else {
                     myApp.hidePreloader();
                     myApp.alert("Error en los datos de sesión", "SmartAPP");
                 }
             },
-            error: function(){
+            error: function (xhr,status) {
                 myApp.hidePreloader();
                 myApp.alert("Error en la Conexión", "SmartAPP");
             }
         });
-    }else{
-        myApp.alert("Erron faltal datos por ingresar", "SmartAPP");
+    } else {
+        myApp.alert("Erron faltan datos por ingresar", "SmartAPP");
     }
 }
-function cam(){
+function cam() {
     navigator.camera.getPicture(
-        function(photo){
+        function (photo) {
            
-        }, 
-        function(error){
+        },
+		function (error) {
             
-        }, 
-        {
-            quality:100,
+        },
+		{
+            quality: 100,
             correctOrientation: true,
             saveToPhotoAlbum: true,
             cameraDirection: 1
         }
     );
 }
+
 

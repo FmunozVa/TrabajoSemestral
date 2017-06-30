@@ -13,9 +13,6 @@
         "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.app.smart"
         },
-        "cordova-plugin-media-capture": {
-            "PACKAGE_NAME": "com.app.smart"
-        },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.app.smart"
         },
@@ -49,7 +46,13 @@
         "cordova-plugin-media": {
             "PACKAGE_NAME": "com.app.smart"
         },
+        "cordova-plugin-media-capture": {
+            "PACKAGE_NAME": "com.app.smart"
+        },
         "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.app.smart"
+        },
+        "cordova-plugin-qrscanner": {
             "PACKAGE_NAME": "com.app.smart"
         },
         "cordova-plugin-splashscreen": {
@@ -62,6 +65,9 @@
             "PACKAGE_NAME": "com.app.smart"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.app.smart"
+        },
+        "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.app.smart"
         }
     },
